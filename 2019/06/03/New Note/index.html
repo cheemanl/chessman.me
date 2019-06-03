@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。 真正觉得自己还是菜，不过也很开心了，能够去看看国赛的题目，觉得和大佬们的差距蛮大的了。最大的感触是ctf是个团队比赛，如果pwn莫得两个人在，我反正是会直接炸的。整场说过最多的话，就是没关系，大不了就凉呗（我们也晓得自己会凉） break itbreak it的环节">
 <meta name="keywords" content="2510378776a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/05/28/hello-world/index.html">
+<meta property="og:title" content="chessman">
+<meta property="og:url" content="http://yoursite.com/2019/06/03/New Note/index.html">
 <meta property="og:site_name" content="chessman">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。 真正觉得自己还是菜，不过也很开心了，能够去看看国赛的题目，觉得和大佬们的差距蛮大的了。最大的感触是ctf是个团队比赛，如果pwn莫得两个人在，我反正是会直接炸的。整场说过最多的话，就是没关系，大不了就凉呗（我们也晓得自己会凉） break itbreak it的环节">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-28T12:23:41.995Z">
+<meta property="og:updated_time" content="2019-06-03T01:05:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="chessman">
+<meta name="twitter:description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。 真正觉得自己还是菜，不过也很开心了，能够去看看国赛的题目，觉得和大佬们的差距蛮大的了。最大的感触是ctf是个团队比赛，如果pwn莫得两个人在，我反正是会直接炸的。整场说过最多的话，就是没关系，大不了就凉呗（我们也晓得自己会凉） break itbreak it的环节">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/28/hello-world/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/03/New Note/">
 
 
 
 
 
-  <title>Hello World | chessman</title>
+  <title> | chessman</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/New Note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chessman">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline"></h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-28T20:23:41+08:00">
-                2019-05-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-03T09:05:22+08:00">
+                2019-06-03
               </time>
             
 
@@ -300,15 +300,13 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。</p>
+<p>真正觉得自己还是菜，不过也很开心了，能够去看看国赛的题目，觉得和大佬们的差距蛮大的了。最大的感触是ctf是个团队比赛，如果pwn莫得两个人在，我反正是会直接炸的。整场说过最多的话，就是没关系，大不了就凉呗（我们也晓得自己会凉）</p>
+<h1 id="break-it"><a href="#break-it" class="headerlink" title="break it"></a>break it</h1><p>break it的环节pwn爆0。</p>
+<p><front size="7" color="#FF0000"> 退赛，回家。（并没有）</front></p>
+<p>赛题难度较大，比赛时间很紧，我能做的题目并不多。我能做的只有一道基础rop的题，也就是pwn1。</p>
+<p>题目用的是libcret的只是，爆破libc_start_main的地址，我以为他能直接用gets写进去sys的地址，但是并不能，他给我东西</p>
+<p>（还没写完）</p>
 
       
     </div>
@@ -439,7 +437,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#break-it"><span class="nav-number">2.</span> <span class="nav-text">break it</span></a></li></ol></div>
             
 
           </div>
