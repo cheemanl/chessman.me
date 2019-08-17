@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,7 +59,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.jpg?v=5.1.4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
 
 
   <link rel="mask-icon" href="/images/logo.jpg?v=5.1.4" color="#222">
@@ -83,18 +83,18 @@
 
 
 
-<meta name="description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。 真正觉得自己还是菜，不过也很开心了，能够去看看国赛的题目，觉得和大佬们的差距蛮大的了。最大的感触是ctf是个团队比赛，如果pwn莫得两个人在，我反正是会直接炸的。整场说过最多的话，就是没关系，大不了就凉呗（我们也晓得自己会凉） break itbreak it的环节">
+<meta name="description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。">
 <meta name="keywords" content="2510378776a">
 <meta property="og:type" content="article">
 <meta property="og:title" content="chessman">
 <meta property="og:url" content="http://yoursite.com/2019/06/03/New Note/index.html">
 <meta property="og:site_name" content="chessman">
-<meta property="og:description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。 真正觉得自己还是菜，不过也很开心了，能够去看看国赛的题目，觉得和大佬们的差距蛮大的了。最大的感触是ctf是个团队比赛，如果pwn莫得两个人在，我反正是会直接炸的。整场说过最多的话，就是没关系，大不了就凉呗（我们也晓得自己会凉） break itbreak it的环节">
+<meta property="og:description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-03T01:05:39.000Z">
+<meta property="og:updated_time" content="2019-08-17T12:39:57.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="chessman">
-<meta name="twitter:description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。 真正觉得自己还是菜，不过也很开心了，能够去看看国赛的题目，觉得和大佬们的差距蛮大的了。最大的感触是ctf是个团队比赛，如果pwn莫得两个人在，我反正是会直接炸的。整场说过最多的话，就是没关系，大不了就凉呗（我们也晓得自己会凉） break itbreak it的环节">
+<meta name="twitter:description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。">
 
 
 
@@ -102,7 +102,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -242,7 +242,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chessman">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/chessman.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -304,8 +304,7 @@
       
 
       
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。</p>
-<p>真正觉得自己还是菜，不过也很开心了，能够去看看国赛的题目，觉得和大佬们的差距蛮大的了。最大的感触是ctf是个团队比赛，如果pwn莫得两个人在，我反正是会直接炸的。整场说过最多的话，就是没关系，大不了就凉呗（我们也晓得自己会凉）</p>
+        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。<br><a id="more"></a><br>真正觉得自己还是菜，不过也很开心了，能够去看看国赛的题目，觉得和大佬们的差距蛮大的了。最大的感触是ctf是个团队比赛，如果pwn莫得两个人在，我反正是会直接炸的。整场说过最多的话，就是没关系，大不了就凉呗（我们也晓得自己会凉）</p>
 <h1 id="break-it"><a href="#break-it" class="headerlink" title="break it"></a>break it</h1><p>break it的环节pwn爆0。</p>
 <p><front size="7" color="#FF0000"> 退赛，回家。（并没有）</front></p>
 <p>赛题难度较大，比赛时间很紧，我能做的题目并不多。我能做的只有一道基础rop的题，也就是pwn1。</p>
@@ -393,6 +392,8 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+              <img class="site-author-image" itemprop="image" src="/images/chessman.jpg" alt="chessman">
+            
               <p class="site-author-name" itemprop="name">chessman</p>
               <p class="site-description motion-element" itemprop="description">辣鸡刘某 在线掉头（发）</p>
           </div>
@@ -424,6 +425,20 @@
           
 
           
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://firstkaixin.github.io" title="Mrkaixin" target="_blank">Mrkaixin</a>
+                  </li>
+                
+              </ul>
+            </div>
           
 
           
@@ -479,7 +494,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
@@ -578,13 +593,6 @@
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
