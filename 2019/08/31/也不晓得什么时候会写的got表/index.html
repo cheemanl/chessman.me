@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="菜鸡的菜鸡笔记,">
 
 
 
@@ -83,18 +83,18 @@
 
 
 
-<meta name="description" content="题目：libc，got与plt表">
-<meta name="keywords" content="2510378776a">
+<meta name="description" content="做了几个题，发现自己是真的没有学过这个东西，我是怎么到这一步的（迷茫）所以决定好好学一下。">
+<meta name="keywords" content="菜鸡的菜鸡笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="chessman">
-<meta property="og:url" content="http://yoursite.com/2019/08/23/也不晓得什么时候会写的got表/index.html">
+<meta property="og:title" content="关于got和plt的不完全总结">
+<meta property="og:url" content="http://yoursite.com/2019/08/31/也不晓得什么时候会写的got表/index.html">
 <meta property="og:site_name" content="chessman">
-<meta property="og:description" content="题目：libc，got与plt表">
+<meta property="og:description" content="做了几个题，发现自己是真的没有学过这个东西，我是怎么到这一步的（迷茫）所以决定好好学一下。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-23T12:53:03.969Z">
+<meta property="og:updated_time" content="2019-08-31T06:45:25.834Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="chessman">
-<meta name="twitter:description" content="题目：libc，got与plt表">
+<meta name="twitter:title" content="关于got和plt的不完全总结">
+<meta name="twitter:description" content="做了几个题，发现自己是真的没有学过这个东西，我是怎么到这一步的（迷茫）所以决定好好学一下。">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/08/23/也不晓得什么时候会写的got表/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/31/也不晓得什么时候会写的got表/">
 
 
 
 
 
-  <title> | chessman</title>
+  <title>关于got和plt的不完全总结 | chessman</title>
   
 
 
@@ -257,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/23/也不晓得什么时候会写的got表/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/31/也不晓得什么时候会写的got表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chessman">
@@ -274,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">关于got和plt的不完全总结</h1>
         
 
         <div class="post-meta">
@@ -287,8 +287,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-23T20:53:03+08:00">
-                2019-08-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-31T00:00:00+08:00">
+                2019-08-31
               </time>
             
 
@@ -303,8 +303,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-23T20:53:03+08:00">
-                2019-08-23
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-31T14:45:25+08:00">
+                2019-08-31
               </time>
             
           </span>
@@ -331,7 +331,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  6 字
+                  307 字
                 </span>
               
 
@@ -368,8 +368,12 @@
       
 
       
-        <hr>
-<h2 id="题目：libc，got与plt表"><a href="#题目：libc，got与plt表" class="headerlink" title="题目：libc，got与plt表"></a>题目：libc，got与plt表</h2>
+        <p>做了几个题，发现自己是真的没有学过这个东西，我是怎么到这一步的（迷茫）所以决定好好学一下。</p>
+<a id="more"></a>
+<h1 id="关于基础概念"><a href="#关于基础概念" class="headerlink" title="关于基础概念"></a>关于基础概念</h1><p>got表和plt表是一种<code>重定向</code>的实现方式。</p>
+<p>ELF可以生成一种特殊的代码——与位置无关的代码(PIC)。用户对gcc使用-fPIC指示GNU编译系统生成PIC代码。是实现共享库或共享可执行代码的基础。这种代码的特殊性在于它可以加载到内存地址空间的任何地址执行。也就是生成了一个动态链接库的，所以它的意思是我能让你算很多遍也找不到偏移地址（不是）</p>
+<p>这也是加载器可以很方便的在进程中动态链接共享库生成了got<code>全w&#39;w&#39;w偏移量表</code>与plt<code>进程链接表</code>。在程序文件中通过一个got表对应外部函数，一个plt对应一个内部函数。由于动态链接的地址不定，所以在写payload的时候，能做到的就是能直接拿到got和plt表的地址去使用函数</p>
+<h1 id="关于函数实现"><a href="#关于函数实现" class="headerlink" title="关于函数实现"></a>关于函数实现</h1><h1 id="我能理解的got和plt"><a href="#我能理解的got和plt" class="headerlink" title="我能理解的got和plt"></a>我能理解的got和plt</h1>
       
     </div>
     
@@ -383,6 +387,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/菜鸡的菜鸡笔记/" rel="tag"># 菜鸡的菜鸡笔记</a>
+          
+        </div>
       
 
       
@@ -467,7 +477,9 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
+            <a href="/">
               <img class="site-author-image" itemprop="image" src="/images/chessman.jpg" alt="chessman">
+              </a>
             
               <p class="site-author-name" itemprop="name">chessman</p>
               <p class="site-description motion-element" itemprop="description">辣鸡刘某 在线掉头（发）</p>
@@ -548,7 +560,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目：libc，got与plt表"><span class="nav-number">1.</span> <span class="nav-text">题目：libc，got与plt表</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于基础概念"><span class="nav-number">1.</span> <span class="nav-text">关于基础概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于函数实现"><span class="nav-number">2.</span> <span class="nav-text">关于函数实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#我能理解的got和plt"><span class="nav-number">3.</span> <span class="nav-text">我能理解的got和plt</span></a></li></ol></div>
             
 
           </div>
@@ -584,7 +596,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">4.5k</span>
+    <span title="Site words total count">4.8k</span>
   
 </div>
 
