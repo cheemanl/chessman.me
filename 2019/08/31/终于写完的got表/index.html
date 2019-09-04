@@ -87,11 +87,11 @@
 <meta name="keywords" content="菜鸡的菜鸡笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于got和plt的不完全总结">
-<meta property="og:url" content="http://chessman.me/2019/08/31/也不晓得什么时候会写的got表/index.html">
+<meta property="og:url" content="http://chessman.me/2019/08/31/终于写完的got表/index.html">
 <meta property="og:site_name" content="chessman">
 <meta property="og:description" content="做了几个题，发现自己是真的没有学过这个东西，我是怎么到这一步的（迷茫）所以决定好好学一下。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-31T06:45:25.834Z">
+<meta property="og:updated_time" content="2019-09-04T12:46:26.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于got和plt的不完全总结">
 <meta name="twitter:description" content="做了几个题，发现自己是真的没有学过这个东西，我是怎么到这一步的（迷茫）所以决定好好学一下。">
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="http://chessman.me/2019/08/31/也不晓得什么时候会写的got表/">
+  <link rel="canonical" href="http://chessman.me/2019/08/31/终于写完的got表/">
 
 
 
@@ -257,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chessman.me/2019/08/31/也不晓得什么时候会写的got表/">
+    <link itemprop="mainEntityOfPage" href="http://chessman.me/2019/08/31/终于写完的got表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chessman">
@@ -303,8 +303,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-31T14:45:25+08:00">
-                2019-08-31
+              <time title="更新于" itemprop="dateModified" datetime="2019-09-04T20:46:26+08:00">
+                2019-09-04
               </time>
             
           </span>
@@ -331,7 +331,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  307 字
+                  658 字
                 </span>
               
 
@@ -347,7 +347,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -370,10 +370,18 @@
       
         <p>做了几个题，发现自己是真的没有学过这个东西，我是怎么到这一步的（迷茫）所以决定好好学一下。</p>
 <a id="more"></a>
-<h1 id="关于基础概念"><a href="#关于基础概念" class="headerlink" title="关于基础概念"></a>关于基础概念</h1><p>got表和plt表是一种<code>重定向</code>的实现方式。</p>
-<p>ELF可以生成一种特殊的代码——与位置无关的代码(PIC)。用户对gcc使用-fPIC指示GNU编译系统生成PIC代码。是实现共享库或共享可执行代码的基础。这种代码的特殊性在于它可以加载到内存地址空间的任何地址执行。也就是生成了一个动态链接库的，所以它的意思是我能让你算很多遍也找不到偏移地址（不是）</p>
-<p>这也是加载器可以很方便的在进程中动态链接共享库生成了got<code>全w&#39;w&#39;w偏移量表</code>与plt<code>进程链接表</code>。在程序文件中通过一个got表对应外部函数，一个plt对应一个内部函数。由于动态链接的地址不定，所以在写payload的时候，能做到的就是能直接拿到got和plt表的地址去使用函数</p>
-<h1 id="关于函数实现"><a href="#关于函数实现" class="headerlink" title="关于函数实现"></a>关于函数实现</h1><h1 id="我能理解的got和plt"><a href="#我能理解的got和plt" class="headerlink" title="我能理解的got和plt"></a>我能理解的got和plt</h1>
+<p>以下的所有内容都是在阅读<a href="https://evilpan.com/2018/04/09/about-got-plt/" target="_blank" rel="noopener">这篇文章</a>之后自己的一些心得,这个师傅讲知识点是真的清楚，可以去好好看看他写的几篇文章。不管是关于栈溢出的，还是关于got，plt表的都讲的特别清楚。后面还有一些</p>
+<h1 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h1><p>got表和plt表是一种<code>重定向</code>的实现方式。动态链接也就是程序把一些函数放在libc中，然后直接用链接器拿到libc表存的地址做一些事情。但是不同的libc版本下，函数的基地址也不同。而且链接过去后拿到的函数地址是变化的。</p>
+<p>因为在函数运行的时候（加了libc之后）就存在延迟绑定。原理如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">加入有一个函数test()</span><br><span class="line">在PLT表中的条目为test@plt</span><br><span class="line">在GOT表中的条目为test@got</span><br><span class="line"></span><br><span class="line">当程序第一调用test()时，调用过程如下</span><br><span class="line">1.跳转到PLT表</span><br><span class="line">2.跳转到GOT表</span><br><span class="line">3.调用patch test@got 将test()的真实地址填充到test@got</span><br><span class="line"></span><br><span class="line">当程序第二次及以后调用test()，调用过程如下</span><br><span class="line">1.test@plt</span><br><span class="line">2.test@got</span><br><span class="line">3.test()的真实地址</span><br><span class="line"></span><br><span class="line">得到完整调用链：Call-&gt;PLT-&gt;GOT-&gt;Real_RVA</span><br></pre></td></tr></table></figure>
+<p>也就是说。不考虑调用，GOT存的就是真实地址。</p>
+<p>同时我们晓得libc和真实地址是相互映射的，能调用got表和plt表去拿到这个地址就很可以。接着就是算算偏移</p>
+<h1 id="关于函数实现"><a href="#关于函数实现" class="headerlink" title="关于函数实现"></a>关于函数实现</h1><p>函数实现的话其实原文件里面就有，但是我觉得重要的技术实现什么的，可以去看看<a href="https://ctf-wiki.github.io/ctf-wiki/pwn/linux/stackoverflow/basic-rop-zh/" target="_blank" rel="noopener">ctfwiki</a>上面的题目。里面有关于ret2libc与retplt的题目。阔以看看（打开NX保护）。</p>
+<p>我们拿到plt表和got表的时候，应该明白一个点，就是之所以把plt表和got表分开的原因就是为了将可写段和可执行段分开，才能使其一个对内链接，一个对外函数，实现动态链接。</p>
+<h1 id="我能理解的got和plt"><a href="#我能理解的got和plt" class="headerlink" title="我能理解的got和plt"></a>我能理解的got和plt</h1><p>动态链接表大多都和位置无关。这只是为了很好的利用内存空间采用的一种程序执行方式。当然如果打开了REL保护，使得got不可以写，那就用re 2 dlresolve这个手段（我不会QAQ</p>
+<hr>
+<p>以后可能会的更多一点会来补充</p>
+
       
     </div>
     
@@ -560,7 +568,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#关于基础概念"><span class="nav-number">1.</span> <span class="nav-text">关于基础概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于函数实现"><span class="nav-number">2.</span> <span class="nav-text">关于函数实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#我能理解的got和plt"><span class="nav-number">3.</span> <span class="nav-text">我能理解的got和plt</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基础概念"><span class="nav-number">1.</span> <span class="nav-text">基础概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于函数实现"><span class="nav-number">2.</span> <span class="nav-text">关于函数实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#我能理解的got和plt"><span class="nav-number">3.</span> <span class="nav-text">我能理解的got和plt</span></a></li></ol></div>
             
 
           </div>
@@ -596,7 +604,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">5.9k</span>
+    <span title="Site words total count">6.4k</span>
   
 </div>
 
