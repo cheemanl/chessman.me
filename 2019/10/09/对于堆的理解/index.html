@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="日常生活,">
+  <meta name="keywords" content="ctf,">
 
 
 
@@ -83,18 +83,18 @@
 
 
 
-<meta name="description" content="憨憨最可爱">
-<meta name="keywords" content="日常生活">
+<meta name="description" content="这段时间一直在堆入门中徘徊，想要去了解以及认识堆的内存结构和堆利用的一些技巧，但是一直找不到窍门，所以决定这段时间沉下心来，好好看看有关于glibc heap的结构。包括molloc源码和free源码。 Heap Oversize 在内存中，我们会经常把堆栈放在一起说，一起称之为堆栈。但是，在程序运行中，堆是可以动态分配的内存，允许程序申请一些未知内存用于分配数据。同时，堆是从低地址向高地址">
+<meta name="keywords" content="ctf">
 <meta property="og:type" content="article">
-<meta property="og:title" content="二刷liveoverflow之后的一点东西">
-<meta property="og:url" content="http://chessman.me/2019/09/09/二刷liveoverflow之后的一点东西/index.html">
+<meta property="og:title" content="glibc heap">
+<meta property="og:url" content="http://chessman.me/2019/10/09/对于堆的理解/index.html">
 <meta property="og:site_name" content="chessman">
-<meta property="og:description" content="憨憨最可爱">
+<meta property="og:description" content="这段时间一直在堆入门中徘徊，想要去了解以及认识堆的内存结构和堆利用的一些技巧，但是一直找不到窍门，所以决定这段时间沉下心来，好好看看有关于glibc heap的结构。包括molloc源码和free源码。 Heap Oversize 在内存中，我们会经常把堆栈放在一起说，一起称之为堆栈。但是，在程序运行中，堆是可以动态分配的内存，允许程序申请一些未知内存用于分配数据。同时，堆是从低地址向高地址">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-19T13:05:37.002Z">
+<meta property="og:updated_time" content="2019-10-08T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="二刷liveoverflow之后的一点东西">
-<meta name="twitter:description" content="憨憨最可爱">
+<meta name="twitter:title" content="glibc heap">
+<meta name="twitter:description" content="这段时间一直在堆入门中徘徊，想要去了解以及认识堆的内存结构和堆利用的一些技巧，但是一直找不到窍门，所以决定这段时间沉下心来，好好看看有关于glibc heap的结构。包括molloc源码和free源码。 Heap Oversize 在内存中，我们会经常把堆栈放在一起说，一起称之为堆栈。但是，在程序运行中，堆是可以动态分配的内存，允许程序申请一些未知内存用于分配数据。同时，堆是从低地址向高地址">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://chessman.me/2019/09/09/二刷liveoverflow之后的一点东西/">
+  <link rel="canonical" href="http://chessman.me/2019/10/09/对于堆的理解/">
 
 
 
 
 
-  <title>二刷liveoverflow之后的一点东西 | chessman</title>
+  <title>glibc heap | chessman</title>
   
 
 
@@ -257,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://chessman.me/2019/09/09/二刷liveoverflow之后的一点东西/">
+    <link itemprop="mainEntityOfPage" href="http://chessman.me/2019/10/09/对于堆的理解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="chessman">
@@ -274,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">二刷liveoverflow之后的一点东西</h1>
+          <h1 class="post-title" itemprop="name headline">glibc heap</h1>
         
 
         <div class="post-meta">
@@ -287,8 +287,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-09T00:00:00+08:00">
-                2019-09-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-09T00:00:00+08:00">
+                2019-10-09
               </time>
             
 
@@ -303,8 +303,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-09-19T21:05:37+08:00">
-                2019-09-19
+              <time title="更新于" itemprop="dateModified" datetime="2019-10-09T00:00:00+08:00">
+                2019-10-09
               </time>
             
           </span>
@@ -331,7 +331,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  140 字
+                  158 字
                 </span>
               
 
@@ -368,16 +368,9 @@
       
 
       
-        <blockquote>
-<p>憨憨最可爱</p>
-</blockquote>
-<a id="more"></a>
-<h1 id="UAF（user-after-free）"><a href="#UAF（user-after-free）" class="headerlink" title="UAF（user-after-free）"></a>UAF（user-after-free）</h1><blockquote>
-<p><a href="https://old.liveoverflow.com/binary_hacking/protostar/heap2.html" target="_blank" rel="noopener">0x16 The Heap: How do use-after-free exploits work?</a> </p>
-</blockquote>
-<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>在heap2（视频中提到的代码）中，auth的值在进行了free，之后没有置零，导致在使用完函数之后我们还能继续使用auth的值。导致函数的值就会被改变。</p>
-<h2 id="复现题目"><a href="#复现题目" class="headerlink" title="复现题目"></a>复现题目</h2><p>由于heap2内的漏洞只是存在而已，只能拿来理解漏洞，所以遇到这样的题，就拿过复现，水水博客（没有错，我是个水货）</p>
-<h1 id="DWORDSHOOT"><a href="#DWORDSHOOT" class="headerlink" title="DWORDSHOOT"></a>DWORDSHOOT</h1><p>这东西之前从来没见过</p>
+         <a id="more"></a>
+<p> 这段时间一直在堆入门中徘徊，想要去了解以及认识堆的内存结构和堆利用的一些技巧，但是一直找不到窍门，所以决定这段时间沉下心来，好好看看有关于glibc heap的结构。包括molloc源码和free源码。</p>
+<h1 id="Heap-Oversize"><a href="#Heap-Oversize" class="headerlink" title="Heap Oversize"></a>Heap Oversize</h1><p> 在内存中，我们会经常把堆栈放在一起说，一起称之为堆栈。但是，在程序运行中，堆是可以动态分配的内存，允许程序申请一些未知内存用于分配数据。同时，堆是从低地址向高地址方向增长的</p>
 
       
     </div>
@@ -395,7 +388,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/日常生活/" rel="tag"># 日常生活</a>
+            <a href="/tags/ctf/" rel="tag"># ctf</a>
           
         </div>
       
@@ -408,8 +401,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/31/终于写完的got表/" rel="next" title="关于got和plt的不完全总结">
-                <i class="fa fa-chevron-left"></i> 关于got和plt的不完全总结
+              <a href="/2019/09/27/how2heap-first_fit.c/" rel="next" title="how2heap_first_fit.c">
+                <i class="fa fa-chevron-left"></i> how2heap_first_fit.c
               </a>
             
           </div>
@@ -497,7 +490,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -510,7 +503,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -565,7 +558,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UAF（user-after-free）"><span class="nav-number">1.</span> <span class="nav-text">UAF（user-after-free）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#漏洞原理"><span class="nav-number">1.1.</span> <span class="nav-text">漏洞原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复现题目"><span class="nav-number">1.2.</span> <span class="nav-text">复现题目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DWORDSHOOT"><span class="nav-number">2.</span> <span class="nav-text">DWORDSHOOT</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Heap-Oversize"><span class="nav-number">1.</span> <span class="nav-text">Heap Oversize</span></a></li></ol></div>
             
 
           </div>
@@ -601,7 +594,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">7.1k</span>
+    <span title="Site words total count">7.5k</span>
   
 </div>
 
